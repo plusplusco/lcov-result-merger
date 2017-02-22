@@ -1,4 +1,6 @@
 # LCOV Result Merger
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/mweibel/lcov-result-merger.svg)](https://greenkeeper.io/)
 [![npm version](https://badge.fury.io/js/lcov-result-merger.svg)](https://badge.fury.io/js/lcov-result-merger)
 [![Build Status](https://travis-ci.org/mweibel/lcov-result-merger.png)](https://travis-ci.org/mweibel/lcov-result-merger)
 [![Coverage Status](https://coveralls.io/repos/github/mweibel/lcov-result-merger/badge.svg?branch=master)](https://coveralls.io/github/mweibel/lcov-result-merger?branch=master)
