@@ -1,21 +1,38 @@
 /* eslint-env mocha */
 
-var fs = require('vinyl-fs')
-var File = require('vinyl')
-var through = require('through2')
-var chai = require('chai')
-var chaiGulpHelpers = require('chai-gulp-helpers')
-var lcovResultMerger = require('../index.js')
+const fs = require('vinyl-fs')
+const File = require('vinyl')
+const through = require('through2')
+const chai = require('chai')
+const lcovResultMerger = require('../index.js')
 
 chai.should()
-chai.use(chaiGulpHelpers)
+
+function collectFiles(stream) {
+  return new Promise(function (resolve, reject) {
+    const result = [];
+
+    stream.on("data", function (file) {
+      result.push(file);
+    });
+
+    stream.once("end", function () {
+      resolve(result);
+    });
+
+    stream.once("error", function (error) {
+      reject(error);
+    });
+  });
+}
 
 describe('lcovResultMerger', function () {
-  it('should combine the given records into one', function () {
+  it('should combine the given records into one', async function () {
     var expected = fs.src('./test/expected/basic/lcov.info')
-    var actual = fs.src('./test/fixtures/basic/*/lcov.info')
-      .pipe(lcovResultMerger())
-    return actual.should.produce.sameFilesAs(expected)
+    var actual = await collectFiles(fs.src('./test/fixtures/basic/*/lcov.info')
+      .pipe(lcovResultMerger()))
+    console.log(actual)
+    return actual['lcov.info'].should.equal(expected)
   })
 
   it('should ignore null files', function (callback) {
@@ -45,13 +62,13 @@ describe('lcovResultMerger', function () {
     var expected = fs.src('./test/expected/windows/lcov.info')
     var actual = fs.src('./test/fixtures/windows/lcov.info')
       .pipe(lcovResultMerger())
-    return actual.should.produce.sameFilesAs(expected)
+    return actual.should.equal(expected)
   })
 
   it('should optionally prepend source file lines', function () {
     var expected = fs.src('./test/expected/prepended/lcov.info')
     var actual = fs.src('./test/fixtures/basic/*/lcov.info')
       .pipe(lcovResultMerger({ 'prepend-source-files': true }))
-    return actual.should.produce.sameFilesAs(expected)
+    return actual.should.equal(expected)
   })
 })

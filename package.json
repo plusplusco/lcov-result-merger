@@ -9,8 +9,8 @@
   "scripts": {
     "lint": "standard",
     "test": "mocha -R spec test --bail",
-    "test-coverage": "istanbul cover _mocha --report lcovonly -- -R spec test --bail",
-    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "test-coverage": "nyc --reporter=lcov npm run test",
+    "coveralls": "cat ./lcov.info | coveralls",
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once"
   },
@@ -38,28 +38,25 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "dependencies": {
-    "through2": "^2.0.3",
-    "vinyl": "^2.1.0",
-    "vinyl-fs": "^3.0.2",
-    "yargs": "^16.2.0"
+    "through2": "^4.0.2",
+    "vinyl": "^2.2.1",
+    "vinyl-fs": "^3.0.3",
+    "yargs": "^17.5.1"
   },
   "devDependencies": {
     "@types/yargs": "^17.0.10",
-    "chai": "^4.1.2",
-    "chai-gulp-helpers": "0.0.3",
-    "coveralls": "^3.0.0",
-    "cz-conventional-changelog": "^3.2.0",
-    "eslint": "^4.18.2",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^3.0.1",
+    "chai": "^4.3.6",
+    "coveralls": "^3.1.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-promise": "^6.0.0",
     "execa": "^5.1.1",
-    "istanbul": "^0.4.5",
     "mocha": "^8.0.1",
-    "rimraf": "^2.6.3",
-    "semantic-release": "^17.1.1",
-    "standard": "^11.0.0",
-    "travis-deploy-once": "^5.0.0"
+    "nyc": "^15.1.0",
+    "rimraf": "^3.0.2",
+    "semantic-release": "^19.0.2",
+    "standard": "^17.0.0",
+    "travis-deploy-once": "^5.0.11"
   },
   "engines": {
     "node": ">=4"
